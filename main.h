@@ -90,14 +90,32 @@ typedef struct passinfo
 	int cmd_buf_type;
 	int readfd;
 	int histcount;
-	char **environ;
+	char **myenviron;
 } info_t;
 
-#define INFO_INIT                                                               \
-	{                                                                           \
-		NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-			0, 0, 0                                                             \
-	}
+info_t INFO_INIT()
+{
+	info_t info;
+	info.arg = NULL;
+	info.argv = NULL;
+	info.path = NULL;
+	info.argc = 0;
+	info.line_count = 0;
+	info.err_num = 0;
+	info.linecount_flag = 0;
+	info.fname = NULL;
+	info.env = NULL;
+	info.history = NULL;
+	info.alias = NULL;
+	info.env_changed = 1;
+	info.status = 0;
+	info.cmd_buf = NULL;
+	info.cmd_buf_type = 2;
+	info.readfd = 0;
+	info.histcount = 0;
+	info.myenviron = NULL;
+	return info;
+}
 
 /**
  * struct builtin - contains a builtin string and related function
