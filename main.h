@@ -71,6 +71,7 @@ typedef struct liststr
  * @readfd: the fd from which to read line input
  * @histcount: the history line number count
  */
+
 typedef struct passinfo
 {
 	char *arg;
@@ -93,29 +94,7 @@ typedef struct passinfo
 	char **myenviron;
 } info_t;
 
-info_t INFO_INIT()
-{
-	info_t info;
-	info.arg = NULL;
-	info.argv = NULL;
-	info.path = NULL;
-	info.argc = 0;
-	info.line_count = 0;
-	info.err_num = 0;
-	info.linecount_flag = 0;
-	info.fname = NULL;
-	info.env = NULL;
-	info.history = NULL;
-	info.alias = NULL;
-	info.env_changed = 1;
-	info.status = 0;
-	info.cmd_buf = NULL;
-	info.cmd_buf_type = 2;
-	info.readfd = 0;
-	info.histcount = 0;
-	info.myenviron = NULL;
-	return info;
-}
+info_t INFO_INIT(void);
 
 /**
  * struct builtin - contains a builtin string and related function
