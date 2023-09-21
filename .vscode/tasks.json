@@ -1,0 +1,30 @@
+{
+	"version": "2.0.0",
+	"includePath": [
+		"${workspaceFolder}/**",
+		"/usr/include",
+		"/usr/local/include"
+	],
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: gcc.exe build active file",
+			"command": "C:\\TDM-GCC-64\\bin\\gcc.exe",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"${file}",
+				"-o",
+				"${fileDirname}\\${fileBasenameNoExtension}.exe"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: C:\\TDM-GCC-64\\bin\\gcc.exe"
+		}
+	]
+}
