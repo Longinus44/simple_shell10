@@ -1,13 +1,12 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef _SHELL_H_
+#define _SHELL_H_
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <sys/wait.h>
 #include <sys/types.h>
-#include <signal.h>
+#include <sys/wait.h>
 #include <sys/stat.h>
 #include <limits.h>
 #include <fcntl.h>
@@ -72,7 +71,6 @@ typedef struct liststr
  * @readfd: the fd from which to read line input
  * @histcount: the history line number count
  */
-
 typedef struct passinfo
 {
 	char *arg;
@@ -86,16 +84,21 @@ typedef struct passinfo
 	list_t *env;
 	list_t *history;
 	list_t *alias;
+	char **environ;
 	int env_changed;
 	int status;
-	char **cmd_buf;
-	int cmd_buf_type;
+
+	char **cmd_buf;	  /* pointer to cmd ; chain buffer, for memory mangement */
+	int cmd_buf_type; /* CMD_type ||, &&, ; */
 	int readfd;
 	int histcount;
-	char **myenviron;
 } info_t;
 
-info_t INFO_INIT(void);
+#define INFO_INIT                                                               \
+	{                                                                           \
+		NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
+			0, 0, 0                                                             \
+	}
 
 /**
  * struct builtin - contains a builtin string and related function
@@ -158,9 +161,9 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* toem_atoi.c */
-int interact(info_t *);
-int _delim(char, char *);
-int _alpha(int);
+int interactive(info_t *);
+int is_delim(char, char *);
+int _isalpha(int);
 int _atoi(char *);
 
 /* toem_errors1.c */
@@ -171,13 +174,13 @@ char *convert_number(long int, int, int);
 void remove_comments(char *);
 
 /* toem_builtin.c */
-int _mexit(info_t *);
+int _myexit(info_t *);
 int _mycd(info_t *);
-int _help(info_t *);
+int _myhelp(info_t *);
 
 /* toem_builtin1.c */
 int _myhistory(info_t *);
-int _alias(info_t *);
+int _myalias(info_t *);
 
 /*toem_getline.c */
 ssize_t get_input(info_t *);
@@ -194,7 +197,7 @@ char *_getenv(info_t *, const char *);
 int _myenv(info_t *);
 int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
-int populate_env_lists(info_t *);
+int populate_env_list(info_t *);
 
 /* toem_getenv.c */
 char **get_environ(info_t *);
